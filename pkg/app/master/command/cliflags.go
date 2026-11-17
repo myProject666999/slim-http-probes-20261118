@@ -105,25 +105,27 @@ const (
 	FlagRemoveFileArtifacts = "remove-file-artifacts"
 	FlagCopyMetaArtifacts   = "copy-meta-artifacts"
 
-	FlagHTTPProbe                 = "http-probe"
-	FlagHTTPProbeOff              = "http-probe-off" //alternative way to disable http probing
-	FlagHTTPProbeCmd              = "http-probe-cmd"
-	FlagHTTPProbeCmdFile          = "http-probe-cmd-file"
-	FlagHTTPProbeStartWait        = "http-probe-start-wait"
-	FlagHTTPProbeRetryCount       = "http-probe-retry-count"
-	FlagHTTPProbeRetryWait        = "http-probe-retry-wait"
-	FlagHTTPProbePorts            = "http-probe-ports"
-	FlagHTTPProbeFull             = "http-probe-full"
-	FlagHTTPProbeExitOnFailure    = "http-probe-exit-on-failure"
-	FlagHTTPProbeCrawl            = "http-probe-crawl"
-	FlagHTTPCrawlMaxDepth         = "http-crawl-max-depth"
-	FlagHTTPCrawlMaxPageCount     = "http-crawl-max-page-count"
-	FlagHTTPCrawlConcurrency      = "http-crawl-concurrency"
-	FlagHTTPMaxConcurrentCrawlers = "http-max-concurrent-crawlers"
-	FlagHTTPProbeAPISpec          = "http-probe-apispec"
-	FlagHTTPProbeAPISpecFile      = "http-probe-apispec-file"
-	FlagHTTPProbeProxyEndpoint    = "http-probe-proxy-endpoint"
-	FlagHTTPProbeProxyPort        = "http-probe-proxy-port"
+	FlagHTTPProbe                   = "http-probe"
+	FlagHTTPProbeOff                = "http-probe-off" //alternative way to disable http probing
+	FlagHTTPProbeCmd                = "http-probe-cmd"
+	FlagHTTPProbeCmdFile            = "http-probe-cmd-file"
+	FlagHTTPProbeStartWait          = "http-probe-start-wait"
+	FlagHTTPProbeRetryCount         = "http-probe-retry-count"
+	FlagHTTPProbeRetryWait          = "http-probe-retry-wait"
+	FlagHTTPProbePorts              = "http-probe-ports"
+	FlagHTTPProbeFull               = "http-probe-full"
+	FlagHTTPProbeExitOnFailure      = "http-probe-exit-on-failure"
+	FlagHTTPProbeCrawl              = "http-probe-crawl"
+	FlagHTTPCrawlMaxDepth           = "http-crawl-max-depth"
+	FlagHTTPCrawlMaxPageCount       = "http-crawl-max-page-count"
+	FlagHTTPCrawlConcurrency        = "http-crawl-concurrency"
+	FlagHTTPMaxConcurrentCrawlers   = "http-max-concurrent-crawlers"
+	FlagHTTPProbeAPISpec            = "http-probe-apispec"
+	FlagHTTPProbeAPISpecFile        = "http-probe-apispec-file"
+	FlagHTTPProbeAPISpecAuth        = "http-probe-apispec-auth"
+	FlagHTTPProbeAPISpecDestructive = "http-probe-apispec-destructive"
+	FlagHTTPProbeProxyEndpoint      = "http-probe-proxy-endpoint"
+	FlagHTTPProbeProxyPort          = "http-probe-proxy-port"
 
 	FlagHostExec     = "host-exec"
 	FlagHostExecFile = "host-exec-file"
@@ -218,25 +220,27 @@ const (
 	FlagRemoveFileArtifactsUsage = "remove file artifacts when command is done"
 	FlagCopyMetaArtifactsUsage   = "copy metadata artifacts to the selected location when command is done"
 
-	FlagHTTPProbeUsage                 = "Enable or disable HTTP probing"
-	FlagHTTPProbeOffUsage              = "Alternative way to disable HTTP probing"
-	FlagHTTPProbeCmdUsage              = "User defined HTTP probe(s) as [[[[\"crawl\":]PROTO:]METHOD:]PATH]"
-	FlagHTTPProbeCmdFileUsage          = "File with user defined HTTP probes"
-	FlagHTTPProbeStartWaitUsage        = "Number of seconds to wait before starting HTTP probing"
-	FlagHTTPProbeRetryCountUsage       = "Number of retries for each HTTP probe"
-	FlagHTTPProbeRetryWaitUsage        = "Number of seconds to wait before retrying HTTP probe (doubles when target is not ready)"
-	FlagHTTPProbePortsUsage            = "Explicit list of ports to probe (in the order you want them to be probed)"
-	FlagHTTPProbeFullUsage             = "Do full HTTP probe for all selected ports (if false, finish after first successful scan)"
-	FlagHTTPProbeExitOnFailureUsage    = "Exit when all HTTP probe commands fail"
-	FlagHTTPProbeCrawlUsage            = "Enable crawling for the default HTTP probe command"
-	FlagHTTPCrawlMaxDepthUsage         = "Max depth to use for the HTTP probe crawler"
-	FlagHTTPCrawlMaxPageCountUsage     = "Max number of pages to visit for the HTTP probe crawler"
-	FlagHTTPCrawlConcurrencyUsage      = "Number of concurrent workers when crawling an HTTP target"
-	FlagHTTPMaxConcurrentCrawlersUsage = "Number of concurrent crawlers in the HTTP probe"
-	FlagHTTPProbeAPISpecUsage          = "Run HTTP probes for API spec"
-	FlagHTTPProbeAPISpecFileUsage      = "Run HTTP probes for API spec from file"
-	FlagHTTPProbeProxyEndpointUsage    = "Endpoint to proxy HTTP probes"
-	FlagHTTPProbeProxyPortUsage        = "Port to proxy HTTP probes (used with HTTP probe proxy endpoint)"
+	FlagHTTPProbeUsage                   = "Enable or disable HTTP probing"
+	FlagHTTPProbeOffUsage                = "Alternative way to disable HTTP probing"
+	FlagHTTPProbeCmdUsage                = "User defined HTTP probe(s) as [[[[\"crawl\":]PROTO:]METHOD:]PATH]"
+	FlagHTTPProbeCmdFileUsage            = "File with user defined HTTP probes"
+	FlagHTTPProbeStartWaitUsage          = "Number of seconds to wait before starting HTTP probing"
+	FlagHTTPProbeRetryCountUsage         = "Number of retries for each HTTP probe"
+	FlagHTTPProbeRetryWaitUsage          = "Number of seconds to wait before retrying HTTP probe (doubles when target is not ready)"
+	FlagHTTPProbePortsUsage              = "Explicit list of ports to probe (in the order you want them to be probed)"
+	FlagHTTPProbeFullUsage               = "Do full HTTP probe for all selected ports (if false, finish after first successful scan)"
+	FlagHTTPProbeExitOnFailureUsage      = "Exit when all HTTP probe commands fail"
+	FlagHTTPProbeCrawlUsage              = "Enable crawling for the default HTTP probe command"
+	FlagHTTPCrawlMaxDepthUsage           = "Max depth to use for the HTTP probe crawler"
+	FlagHTTPCrawlMaxPageCountUsage       = "Max number of pages to visit for the HTTP probe crawler"
+	FlagHTTPCrawlConcurrencyUsage        = "Number of concurrent workers when crawling an HTTP target"
+	FlagHTTPMaxConcurrentCrawlersUsage   = "Number of concurrent crawlers in the HTTP probe"
+	FlagHTTPProbeAPISpecUsage            = "Run HTTP probes for API spec"
+	FlagHTTPProbeAPISpecFileUsage        = "Run HTTP probes for API spec from file"
+	FlagHTTPProbeAPISpecAuthUsage        = "Credential for API spec secured operations keyed by security scheme name (format <scheme>:<value> or <scheme>:<header>:<value>; basic value is <user>:<pass>) [can use this flag multiple times]"
+	FlagHTTPProbeAPISpecDestructiveUsage = "Enable destructive HTTP probe methods (POST, PUT, PATCH, DELETE) for API spec probing, ordered per resource as create -> modify -> read -> delete (default: only GET, HEAD and OPTIONS are sent)"
+	FlagHTTPProbeProxyEndpointUsage      = "Endpoint to proxy HTTP probes"
+	FlagHTTPProbeProxyPortUsage          = "Port to proxy HTTP probes (used with HTTP probe proxy endpoint)"
 
 	FlagHostExecUsage     = "Host commands to execute (aka host commands probes)"
 	FlagHostExecFileUsage = "Host commands to execute loaded from file (aka host commands probes)"
@@ -619,6 +623,17 @@ var CommonFlags = map[string]cli.Flag{
 		Usage:   FlagHTTPProbeAPISpecFileUsage,
 		EnvVars: []string{"DSLIM_HTTP_PROBE_API_SPEC_FILE"},
 	},
+	FlagHTTPProbeAPISpecAuth: &cli.StringSliceFlag{
+		Name:    FlagHTTPProbeAPISpecAuth,
+		Value:   cli.NewStringSlice(),
+		Usage:   FlagHTTPProbeAPISpecAuthUsage,
+		EnvVars: []string{"DSLIM_HTTP_PROBE_API_SPEC_AUTH"},
+	},
+	FlagHTTPProbeAPISpecDestructive: &cli.BoolFlag{
+		Name:    FlagHTTPProbeAPISpecDestructive,
+		Usage:   FlagHTTPProbeAPISpecDestructiveUsage,
+		EnvVars: []string{"DSLIM_HTTP_PROBE_API_SPEC_DESTRUCTIVE"},
+	},
 	FlagHTTPProbeStartWait: &cli.IntFlag{
 		Name:    FlagHTTPProbeStartWait,
 		Value:   0,
@@ -950,6 +965,8 @@ func HTTPProbeFlagsBasic() []cli.Flag {
 		Cflag(FlagHTTPMaxConcurrentCrawlers),
 		Cflag(FlagHTTPProbeAPISpec),
 		Cflag(FlagHTTPProbeAPISpecFile),
+		Cflag(FlagHTTPProbeAPISpecAuth),
+		Cflag(FlagHTTPProbeAPISpecDestructive),
 	}
 }
 

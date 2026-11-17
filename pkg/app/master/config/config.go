@@ -248,8 +248,10 @@ type HTTPProbeOptions struct {
 	CrawlConcurrency    int
 	CrawlConcurrencyMax int
 
-	APISpecs     []string
-	APISpecFiles []string
+	APISpecs           []string
+	APISpecFiles       []string
+	APISpecAuth        []string
+	APISpecDestructive bool
 
 	ProxyEndpoint string
 	ProxyPort     int

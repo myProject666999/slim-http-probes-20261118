@@ -1,5 +1,18 @@
 # Releases
 
+## Unreleased
+
+### New Features
+
+- API-spec-driven HTTP probes (`--http-probe-apispec` / `--http-probe-apispec-file`) now construct requests from each operation's path, query/header/cookie parameters and request-body schema for both Swagger 2.x and OpenAPI 3.x. Parameter placeholders use example -> enum -> default -> type-generated values, and required bodies are generated as minimal legal examples with a depth cap and cycle truncation for nested/cyclic `$ref` schemas.
+- New `--http-probe-apispec-auth` flag supplies credentials keyed by security scheme name (apiKey, http basic/bearer, and static bearer for oauth2/openIdConnect). Secured operations are skipped with a `missing-credential` reason when no credential matches.
+- New `--http-probe-apispec-destructive` flag gates `POST`/`PUT`/`PATCH`/`DELETE`; by default only safe methods (`GET`/`HEAD`/`OPTIONS`) are sent, and destructive calls are ordered create -> modify -> read -> delete per resource path.
+
+### Improvements
+
+- API-spec probing is additive with a per-request report: failures are retried then recorded without aborting the round, partial results from a crashed target are retained, and repeated rounds merge by union.
+- Restored compilation of the HTTP probe package against the current kin-openapi version (the `Paths` object is no longer a map).
+
 ## 1.40.11 (2/2/2024)
 
 ### New Features

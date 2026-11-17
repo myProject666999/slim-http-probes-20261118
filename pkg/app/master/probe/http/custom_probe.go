@@ -42,6 +42,8 @@ type CustomProbe struct {
 
 	APISpecProbes []apiSpecInfo
 
+	apiSpecReports []APISpecProbeReport
+
 	printState bool
 
 	CallCount uint64
@@ -632,8 +634,16 @@ func (p *CustomProbe) probeAPISpecs(proto, targetHost, port string) {
 			}
 		}
 
-		p.probeAPISpecEndpoints(proto, targetHost, port, apiPrefix, specInfo.spec)
+		report := p.probeAPISpecEndpoints(proto, targetHost, port, apiPrefix, specInfo.spec)
+		p.apiSpecReports = append(p.apiSpecReports, report)
 	}
+}
+
+// APISpecReports holds the additive per-spec probe reports. Multiple probe
+// rounds (path lists, spec files or repeated runs) merge by union: nothing is
+// ever removed, and partial results from a crashed target remain available.
+func (p *CustomProbe) APISpecReports() []APISpecProbeReport {
+	return p.apiSpecReports
 }
 
 // DoneChan returns the 'done' channel for the HTTP probe instance

@@ -450,6 +450,8 @@ In the interactive CLI prompt mode you must specify the target image using the `
 - `--http-max-concurrent-crawlers` - Number of concurrent crawlers in the HTTP probe (default value: 1)
 - `--http-probe-apispec` - Run HTTP probes for API spec where the value represents the target path where the spec is available (supports Swagger 2.x and OpenAPI 3.x) [can use this flag multiple times]
 - `--http-probe-apispec-file` - Run HTTP probes for API spec from file (supports Swagger 2.x and OpenAPI 3.x) [can use this flag multiple times]
+- `--http-probe-apispec-auth` - Credential for API spec secured operations, keyed by security scheme name. Value forms: `<scheme>:<value>` (an apiKey uses the scheme's header/query/cookie name, a bearer/oauth2/openIdConnect scheme sends `Authorization: Bearer <value>`, an http/basic scheme treats the value as `<user>:<pass>`) or `<scheme>:<header>:<value>` to force a header name for an apiKey. By default, secured operations are skipped when no matching credential is supplied (an unauthenticated call would be rejected before reaching application code, so it adds no coverage). [can use this flag multiple times]
+- `--http-probe-apispec-destructive` - Enable destructive probe methods (`POST`, `PUT`, `PATCH`, `DELETE`) derived from the API spec. Disabled by default: only safe methods (`GET`, `HEAD`, `OPTIONS`) are sent so test data is not wiped out. When enabled, requests for the same resource path are ordered create -> modify -> read -> delete. Cross-resource dependency tracking is not performed, so a generated `GET`/`DELETE` on a path parameter uses the spec-derived placeholder id rather than an id returned by a previous `POST` (default value: false)
 - `--http-probe-exec` - App to execute when running HTTP probes. [can use this flag multiple times]
 - `--http-probe-exec-file` - Apps to execute when running HTTP probes loaded from file.
 - `--publish-port` - Map container port to host port analyzing image at runtime to make it easier to integrate external tests (format => port | hostPort:containerPort | hostIP:hostPort:containerPort | hostIP::containerPort )[can use this flag multiple times]
@@ -1041,9 +1043,19 @@ The current version also includes an experimental `crawling` capability. To enab
 
 When `crawling` is enabled the HTTP probe will act like a web crawler following the links it finds in the target endpoint.
 
-Probing based on the Swagger/OpenAPI spec is another experimental capability. This feature introduces two new flags:
+Probing based on the Swagger/OpenAPI spec is another experimental capability. This feature introduces these flags:
 * `http-probe-apispec` - value: `<path_to_fetch_spec>:<api_endpoint_prefix>`
 * `http-probe-apispec-file` - value: `<local_file_path_to_spec>`
+* `http-probe-apispec-auth` - value: `<scheme>:<value>` or `<scheme>:<header>:<value>` [repeatable]
+* `http-probe-apispec-destructive` - boolean, enables `POST`/`PUT`/`PATCH`/`DELETE`
+
+Requests are generated from each operation's path, method, parameters and request-body schema rather than from a hand-written path list:
+
+* **Parameter values.** Path and query placeholders are filled with the first legal value found using this priority: the parameter's example, then a named example, then the schema's `example`, `enum` or `default`, and finally a type-generated placeholder (honoring constraints such as `minimum` and `minLength`). Path parameters are URL-escaped into the path; query parameters are appended to the query string.
+* **Request bodies.** A required body is generated as a minimal legal example from its schema. References may be deeply nested or cyclic; generation is bounded by a fixed depth limit and truncates a repeated reference to an empty, type-correct value, so it cannot overflow the stack. JSON media types are preferred; `application/x-www-form-urlencoded` is also supported.
+* **Authentication.** When an operation declares a security requirement and no matching `--http-probe-apispec-auth` credential was provided, the operation is skipped (and reported with a `missing-credential` reason). The rationale is that an unauthenticated request is rejected at the auth layer before the application code runs, so it adds no file-access coverage while producing lockout/rate-limit noise. An explicit anonymous requirement (`security: [{}]`) is treated as public. OAuth2/OpenID Connect accept a static bearer token; no token-exchange flow is performed.
+* **Safe-by-default methods.** Only `GET`, `HEAD` and `OPTIONS` are sent unless `--http-probe-apispec-destructive` is set. Indiscriminately calling `DELETE`/`PUT` can remove test data and push later requests into "not found" branches, which reduces coverage. With destructive probing enabled, operations on the same resource path are ordered create -> modify -> read -> delete (`POST`, then `PUT`/`PATCH`, then `GET`/`HEAD`/`OPTIONS`, then `DELETE`). Cross-resource dependency inference is intentionally not supported: a parameterized request cannot reuse an identifier created by an earlier request.
+* **Rounds and merge behavior.** Spec probing is additive. A request that keeps failing is retried per `--http-probe-retry-count`/`--http-probe-retry-wait`, then recorded as a failure; the round continues with the next request instead of aborting. If the target crashes mid-round, every result already collected is retained, so combining multiple rounds (path-list probes, spec probes or repeated runs) is a simple union. The service state is never reset between rounds.
 
 You can use the `--http-probe-exec` and `--http-probe-exec-file` options to run the user provided commands when the http probes are executed. This example shows how you can run `curl` against the temporary container created by Slim when the http probes are executed.
 

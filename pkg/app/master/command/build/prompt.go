@@ -64,6 +64,8 @@ var CommandFlagSuggestions = &command.FlagSuggestions{
 		{Text: command.FullFlagName(command.FlagHTTPMaxConcurrentCrawlers), Description: command.FlagHTTPMaxConcurrentCrawlersUsage},
 		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpec), Description: command.FlagHTTPProbeAPISpecUsage},
 		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpecFile), Description: command.FlagHTTPProbeAPISpecFileUsage},
+		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpecAuth), Description: command.FlagHTTPProbeAPISpecAuthUsage},
+		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpecDestructive), Description: command.FlagHTTPProbeAPISpecDestructiveUsage},
 		{Text: command.FullFlagName(command.FlagPublishPort), Description: command.FlagPublishPortUsage},
 		{Text: command.FullFlagName(command.FlagPublishExposedPorts), Description: command.FlagPublishExposedPortsUsage},
 		{Text: command.FullFlagName(command.FlagHostExec), Description: command.FlagHostExecUsage},

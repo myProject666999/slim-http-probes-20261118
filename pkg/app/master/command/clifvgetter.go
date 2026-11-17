@@ -117,6 +117,8 @@ func GetHTTPProbeOptions(xc *app.ExecutionContext, ctx *cli.Context, doProbe boo
 	opts.Ports = ports
 
 	opts.APISpecs = ctx.StringSlice(FlagHTTPProbeAPISpec)
+	opts.APISpecAuth = ctx.StringSlice(FlagHTTPProbeAPISpecAuth)
+	opts.APISpecDestructive = ctx.Bool(FlagHTTPProbeAPISpecDestructive)
 	apiSpecFiles, fileErrors := ValidateFiles(ctx.StringSlice(FlagHTTPProbeAPISpecFile))
 	if len(fileErrors) > 0 {
 		for k, v := range fileErrors {

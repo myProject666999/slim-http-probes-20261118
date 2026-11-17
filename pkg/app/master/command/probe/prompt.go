@@ -30,6 +30,8 @@ var CommandFlagSuggestions = &command.FlagSuggestions{
 		{Text: command.FullFlagName(command.FlagHTTPMaxConcurrentCrawlers), Description: command.FlagHTTPMaxConcurrentCrawlersUsage},
 		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpec), Description: command.FlagHTTPProbeAPISpecUsage},
 		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpecFile), Description: command.FlagHTTPProbeAPISpecFileUsage},
+		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpecAuth), Description: command.FlagHTTPProbeAPISpecAuthUsage},
+		{Text: command.FullFlagName(command.FlagHTTPProbeAPISpecDestructive), Description: command.FlagHTTPProbeAPISpecDestructiveUsage},
 	},
 	Values: map[string]command.CompleteValue{
 		command.FullFlagName(command.FlagHTTPProbeCmdFile):     command.CompleteFile,
